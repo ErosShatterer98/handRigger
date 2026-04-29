@@ -1,5 +1,4 @@
 from core.MayaWidget import MayaWidget 
-from Tools.limbRigger import LimbRigger 
 from PySide6.QtWidgets import QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QLabel, QColorDialog 
 from PySide6.QtGui import QColor 
 import maya.cmds as mc 
@@ -17,7 +16,7 @@ from core.MayaUtilities import (CreateCircleControllerForJnt,
 
 class HandRigger: 
     def __init__ (self):  
-        self.controllerSize = 10 
+        self.controllerSize = 1.5 
         self.blendControllerSize = 4 
         self.controlColorRGB = [0,0,0] 
 
@@ -28,46 +27,36 @@ class HandRigger:
         self.blendControllerSize = newBlendControllerSize 
 
     def SetControlColor(self, newControlColorRGB): 
-        self.controlColorRGB = newControlColorRGB     
+        self.controlColorRGB = newControlColorRGB 
 
-    def RigHand(self):
+    def RigHand(self): 
         print("Start rigging!!") 
         fingers = mc.ls(sl=True) 
         for finger in fingers: 
             self.RigFinger(finger) 
 
+
     def RigFinger(self, finger): 
         # To rig each individual finger 
-        finger = CreateCircleControllerForJnt(finger, "fk_" + self.nameBase, self.controllerSize) 
-
-
-
-
-
+        fingerCtrl, fingerCtrlGrp = CreateCircleControllerForJnt(finger, "fk_", self.controllerSize) 
         
+        childFingerJnts = mc.listRelatives(finger, c=True, type="joint")
+        if childFingerJnts:
+            childCtrl, childCtrlGrp = self.RigFinger(childFingerJnts[0])
+            mc.parent(childCtrlGrp, fingerCtrl) 
 
-    
+        return fingerCtrl, fingerCtrlGrp 
 
 
 
-class HandRiggerWidget: 
+
+class HandRiggerWidget(MayaWidget): 
     def __init__ (self): 
         super().__init__() 
         self.setWindowTitle("Hand Rigger") 
         self.rigger = HandRigger() 
         self.masterLayout = QVBoxLayout() 
         self.setLayout(self.masterLayout) 
-
-        self.infoLayout = QHBoxLayout() 
-        self.masterLayout.addLayout(self.infoLayout) 
-        self.infoLayout.addWidget(QLabel("Name Base:")) 
-
-        self.nameBaseLineEdit = QLineEdit() 
-        self.infoLayout.addWidget(self.nameBaseLineEdit) 
-
-        self.setNameBaseBtn = QPushButton("Set Name Base") 
-        self.setNameBaseBtn.clicked.connect(self.SetNameBaseBtnClicked) 
-        self.infoLayout.addWidget(self.setNameBaseBtn) 
 
         self.controlColorBtn = QPushButton("Select Color") 
         self.controlColorBtn.clicked.connect(self.controlColorBtnClicked) 
