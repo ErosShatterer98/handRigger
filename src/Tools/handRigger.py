@@ -66,6 +66,8 @@ class HandRiggerWidget(MayaWidget):
         self.rigHandBtn.clicked.connect(self.RigHandBtnClicked) 
         self.masterLayout.addWidget(self.rigHandBtn) 
 
+        self.masterLayout.addWidget(QLabel("Please select the finger joints."))
+
     def SetNameBaseBtnClicked(self):
         self.rigger.SetNameBase(self.nameBaseLineEdit.text()) 
 
