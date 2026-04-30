@@ -32,6 +32,8 @@ class HandRigger:
     def RigHand(self): 
         print("Start rigging!!") 
         fingers = mc.ls(sl=True) 
+        if not fingers: 
+            print ("Please select the finger joints.") 
         for finger in fingers: 
             self.RigFinger(finger) 
 
