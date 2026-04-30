@@ -20,5 +20,6 @@
 
 <img src="assets/HRscreenshot.png" width=300> 
 
-* Rig each finger, one at a time easily
-* Allowing the user to control the finger by the joint
+* What is it and how is it used? Rigs each finger, one at a time easily allowing the user to control the finger by the joint. 
+* What issue does it solve? It allows the user to control the finger without having to rig each individual joint. 
+* The tool handles bad inputs and give out hints if something went wrong. 
