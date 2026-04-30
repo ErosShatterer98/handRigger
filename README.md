@@ -20,4 +20,5 @@
 
 <img src="assets/HRscreenshot.png" width=300> 
 
-* Rig each finger, one at a time easily 
+* Rig each finger, one at a time easily
+* Allowing the user to control the finger by the joint
