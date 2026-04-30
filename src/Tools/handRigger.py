@@ -60,6 +60,8 @@ class HandRiggerWidget(MayaWidget):
         self.masterLayout = QVBoxLayout() 
         self.setLayout(self.masterLayout) 
 
+        self.masterLayout.addWidget(QLabel("Please select the finger joints.")) 
+
         self.controlColorBtn = QPushButton("Select Color") 
         self.controlColorBtn.clicked.connect(self.controlColorBtnClicked) 
         self.masterLayout.addWidget(self.controlColorBtn) 
@@ -68,7 +70,6 @@ class HandRiggerWidget(MayaWidget):
         self.rigHandBtn.clicked.connect(self.RigHandBtnClicked) 
         self.masterLayout.addWidget(self.rigHandBtn) 
 
-        self.masterLayout.addWidget(QLabel("Please select the finger joints."))
 
     def SetNameBaseBtnClicked(self):
         self.rigger.SetNameBase(self.nameBaseLineEdit.text()) 
